@@ -30,33 +30,20 @@ def sitemap():
 @app.route('/members', methods=['GET'])
 def get_all():
     members = jackson_family.get_all_members()
-    if status_code is 200:
-        return jsonify(members), 200
-    if 400 < status_code < 499:
-        return jsonify({"msg":"No family members found"}), status_code
-    if status_code > 500:
-        return jsonify({"msg":"Server error"}), status_code
+    return jsonify(members), 200
+
 
 @app.route('/member/<int:member_id>', methods=['GET'])
 def get_one(member_id):
     member=jackson_family.get_member(member_id)
-    if status_code is 200:
-        return jsonify(member), 200
-    if 400 < status_code < 499:
-        return jsonify({"msg":"No family member found"}), status_code
-    if status_code > 500:
-        return jsonify({"msg":"Server error"}), status_code
+    return jsonify(member), 200
 
 @app.route('/member', methods=['POST'])
 def add_member():
     new_memberRequest = request.get_json()
+    # se puede implementar condiciones adicionales para evaluar y responder con 400
     new_member=jackson_family.add_member(new_memberRequest)
-    if status_code is 200:
-        return jsonify(new_member), 200
-    if 400 < status_code < 499:
-        return jsonify({"msg":"No family member found"}), status_code
-    if status_code > 500:
-        return jsonify({"msg":"Server error"}), status_code
+    return jsonify(new_member), 200
 
 @app.route('/member/<int:member_id>', methods=['DELETE'])
 def delete_member(member_id):
